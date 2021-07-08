@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tentwenty_project/models/movie_detail.dart';
 import 'package:flutter_vlc_player/flutter_vlc_player.dart';
+import 'package:tentwenty_project/ui/trialer_ui.dart';
 import 'package:tentwenty_project/view_model/detail_movie_model.dart';
 
 class movie_detail_ui extends StatelessWidget {
@@ -79,7 +80,7 @@ class movie_detail_ui extends StatelessWidget {
                              onPressed: () {
                                Navigator.push(context,
                                  MaterialPageRoute(
-                                   builder: (context) => movie_detail_ui(id:movie.id),
+                                   builder: (context) => trailer_ui(id:id),
                                  ),
                                );
                              },
