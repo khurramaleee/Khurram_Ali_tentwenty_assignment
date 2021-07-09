@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       create: (context) => ConnectivityService().connectionStatusController.stream,
 
       child: MaterialApp(
-        title: 'Connectivity Aware UI',
+        title: 'TenTwenty',
         theme: ThemeData(
             textTheme: Theme.of(context)
                 .textTheme

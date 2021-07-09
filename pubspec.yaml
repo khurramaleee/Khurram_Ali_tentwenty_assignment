@@ -34,6 +34,7 @@ dependencies:
   path_provider:
   sqflite:
   cached_network_image:
+  fluttertoast:
 
 dev_dependencies:
   flutter_test:

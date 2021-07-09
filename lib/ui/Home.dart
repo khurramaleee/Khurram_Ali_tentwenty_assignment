@@ -6,6 +6,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:http/http.dart' as http;
 
@@ -48,12 +49,12 @@ Future<String> networkImageToBase64(String imageUrl) async {
           final movies_index = model.movies_list;
           var connectionStatus = Provider.of<ConnectivityStatus>(context);
           if (connectionStatus == ConnectivityStatus.online) {
-
+            final key = new GlobalKey<ScaffoldState>();
             return ListView.builder(
               itemCount: movies_index.length,
               itemBuilder: (context, index) {
                 final movie = movies_index[index];
-                SQLiteDbProvider.db.insert(movie);
+                SQLiteDbProvider.db.Addmovie(movie);
                 return Column(
                   children: [
                     Container(
@@ -169,13 +170,13 @@ Future<String> networkImageToBase64(String imageUrl) async {
           else  {
             return
               FutureBuilder<List<movies>>(
-                future: SQLiteDbProvider.db.getAllProducts(),
+                future: SQLiteDbProvider.db.getAllMovies(),
                 builder: (context, snapshot){
                     return ListView.builder(
                       itemCount: movies_index.length,
                       itemBuilder: (context, index) {
                         final movie = movies_index[index];
-                        SQLiteDbProvider.db.insert(movie);
+                        SQLiteDbProvider.db.Addmovie(movie);
             print(movie.posterPath);
 
                         return Column(
@@ -261,11 +262,9 @@ Future<String> networkImageToBase64(String imageUrl) async {
                                                   //content padding inside button
                                                 ),
                                                 onPressed: (){
-                                                  Navigator.push(context,
-                                                    MaterialPageRoute(
-                                                      builder: (context) => movie_detail_ui(id:movie.id),
-                                                    ),
-                                                  );
+                                                  Scaffold.of(context).showSnackBar(new SnackBar(
+                                                    content: new Text("You are currently offline"),
+                                                  ));
                                                 },
                                                 child: Text("Book",style: TextStyle(color: Colors.black),)
                                             )
@@ -302,4 +301,5 @@ Future<String> networkImageToBase64(String imageUrl) async {
       ),
     );
   }
+
 }

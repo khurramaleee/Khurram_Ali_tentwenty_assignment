@@ -46,7 +46,7 @@ class SQLiteDbProvider {
         }
     );
   }
-  Future<List<movies>> getAllProducts() async {
+  Future<List<movies>> getAllMovies() async {
     final db = await database;
     List<Map> results = await db.query(
         "movies", columns: movies.columns, orderBy: "id ASC"
@@ -58,11 +58,8 @@ class SQLiteDbProvider {
     });
     return products;
   }
-  Uint8List _bytesImage;
 
-
-
-  insert(movies movie) async {
+  Addmovie(movies movie) async {
     final db = await database;
 
     var maxIdResult = await db.rawQuery("SELECT MAX(id)+2 as last_inserted_id FROM movies");

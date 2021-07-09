@@ -29,19 +29,51 @@ class trailer_ui extends StatelessWidget {
 
           return Scaffold(
 
-              body:   Container(child:YoutubePlayer(
-                controller: YoutubePlayerController(
-                  initialVideoId: video_data["results"][0]["key"], //Add videoID.
-                  flags: YoutubePlayerFlags(
-                    hideControls: false,
-                    controlsVisibleAtStart: true,
-                    autoPlay: true,
-                    mute: false,
-                  ),
-                ),
-                showVideoProgressIndicator: true,
-              ),
+              body:   SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Container(child:YoutubePlayer(
+                      controller: YoutubePlayerController(
+                        initialVideoId: video_data["results"][0]["key"],
+                        //Add videoID.
+                        flags: YoutubePlayerFlags(
+                          hideControls: false,
 
+                          controlsVisibleAtStart: true,
+                          autoPlay: true,
+                          mute: false,
+
+                        ),
+
+                      ),
+                      showVideoProgressIndicator: true,
+                      onEnded: (e){
+                        Navigator.pop(context);
+                      },
+                    ),
+
+
+
+                    ),
+
+                    Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: Center(
+
+                          child: RaisedButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.fromLTRB(20,0,20,0),
+                                child: Text("Done"),
+                              )
+                          ) ,
+
+                        )
+                    ),
+                  ],
+                ),
               ));
 
 

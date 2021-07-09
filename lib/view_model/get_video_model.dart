@@ -34,7 +34,7 @@ class get_video_model extends ChangeNotifier {
       _videostate = video_state.Loaded;
     } catch (e) {
       message = '$e';
-      print("ye hy error"+e.toString());
+
 
 
       _videostate = video_state.Error;

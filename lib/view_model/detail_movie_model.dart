@@ -33,7 +33,7 @@ class detail_movie_model extends ChangeNotifier {
       _homeState = HomeState.Loaded;
     } catch (e) {
       message = '$e';
-      print("ye hy error"+e.toString());
+
 
 
       _homeState = HomeState.Error;
