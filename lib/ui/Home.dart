@@ -68,6 +68,7 @@ Future<String> networkImageToBase64(String imageUrl) async {
                                   maxWidth: 80,
                                   maxHeight: 80,
                                 ),
+                                //
                                 child:CachedNetworkImage(
                                   imageUrl: "https://image.tmdb.org/t/p/original/"+movie.posterPath,
                                   progressIndicatorBuilder: (context, url, downloadProgress) =>
