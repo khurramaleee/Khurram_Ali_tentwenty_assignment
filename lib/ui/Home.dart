@@ -33,7 +33,7 @@ Future<String> networkImageToBase64(String imageUrl) async {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('TenTwenty Porject'),
+        title: Text('TenTwenty Project'),
       ),
       body: ChangeNotifierProvider(
         create: (context) => movie_model(""),
