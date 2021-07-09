@@ -2,7 +2,6 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tentwenty_project/models/movie_detail.dart';
-import 'package:flutter_vlc_player/flutter_vlc_player.dart';
 import 'package:tentwenty_project/view_model/detail_movie_model.dart';
 import 'package:tentwenty_project/view_model/get_video_model.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
