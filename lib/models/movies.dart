@@ -14,7 +14,7 @@ class movies {
   bool video;
   String voteAverage;
   String voteCount;
-
+  static final columns = ["id", "originalTitle", "overview", "releaseDate", "image"];
   movies(
       {this.adult,
         this.backdropPath,
