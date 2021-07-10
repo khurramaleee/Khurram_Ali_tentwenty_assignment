@@ -29,6 +29,7 @@ class SQLiteDbProvider extends ChangeNotifier {
 
   initDB() async {
    try{
+
      Directory documentsDirectory = await
      getApplicationDocumentsDirectory();
      String path = join(documentsDirectory.path, "movie_database.db");
