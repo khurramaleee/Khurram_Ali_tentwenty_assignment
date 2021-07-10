@@ -55,6 +55,7 @@ Future<String> networkImageToBase64(String imageUrl) async {
               itemBuilder: (context, index) {
                 final movie = movies_index[index];
                 SQLiteDbProvider.db.Addmovie(movie);
+                print("adding");
                 return Column(
                   children: [
                     Container(
@@ -82,7 +83,7 @@ Future<String> networkImageToBase64(String imageUrl) async {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               AutoSizeText.rich(
-                                TextSpan(text:movie.title,),
+                                TextSpan(text:movie.originalTitle,),
                                 style: TextStyle(fontSize: 12,color: Colors.black),
                                 textAlign :TextAlign.start,
                                 minFontSize: 1,
@@ -172,124 +173,126 @@ Future<String> networkImageToBase64(String imageUrl) async {
               FutureBuilder<List<movies>>(
                 future: SQLiteDbProvider.db.getAllMovies(),
                 builder: (context, snapshot){
+                  if(snapshot.data!=null){
                     return ListView.builder(
-                      itemCount: movies_index.length,
+                      itemCount: snapshot.data.length,
                       itemBuilder: (context, index) {
-                        final movie = movies_index[index];
-                        SQLiteDbProvider.db.Addmovie(movie);
-            print(movie.posterPath);
 
-                        return Column(
-                          children: [
-                            Container(
-                              child: Row(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: ConstrainedBox(
-                                        constraints: BoxConstraints(
-                                          minWidth: 80,
-                                          minHeight: 80,
-                                          maxWidth: 80,
-                                          maxHeight: 80,
-                                        ),
-                                        child:
-                                        CachedNetworkImage(
-                                          imageUrl: "https://image.tmdb.org/t/p/original/"+movie.posterPath,
-                                          progressIndicatorBuilder: (context, url, downloadProgress) =>
-                                              CircularProgressIndicator(value: downloadProgress.progress),
-                                          errorWidget: (context, url, error) => Icon(Icons.error),
-                                        ),
-
-
-                                    ),
-                                  ),
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                            print("now calling from local");
+                            return Column(
+                              children: [
+                                Container(
+                                  child: Row(
                                     children: [
-                                      AutoSizeText.rich(
-                                        TextSpan(text:movie.title,),
-                                        style: TextStyle(fontSize: 12,color: Colors.black),
-                                        textAlign :TextAlign.start,
-                                        minFontSize: 1,
-
-                                        maxLines: 2,
-                                        overflow: TextOverflow.ellipsis,
-
-
-                                      ),
-                                      AutoSizeText.rich(
-
-                                        TextSpan(text:movie.releaseDate,),
-                                        textAlign :TextAlign.right,
-                                        style: TextStyle(fontSize: 12,color: Colors.black),
-
-                                        minFontSize: 1,
-
-                                      ),
-
-                                      AutoSizeText.rich(
-
-                                        TextSpan(text:movie.adult=="true"?"Adult":"Non adult",),
-                                        textAlign :TextAlign.start,
-                                        style: TextStyle(fontSize: 12,color: Colors.black),
-
-                                        minFontSize: 1,
-
-                                      ),
-
-
-                                    ],
-                                  ),
-                                  Spacer(),
-                                  Row(
-                                    crossAxisAlignment: CrossAxisAlignment.end,
-                                    children: [
-
                                       Padding(
                                         padding: const EdgeInsets.all(8.0),
-                                        child: SizedBox(
+                                        child: ConstrainedBox(
+                                          constraints: BoxConstraints(
+                                            minWidth: 80,
+                                            minHeight: 80,
+                                            maxWidth: 80,
+                                            maxHeight: 80,
+                                          ),
+                                          child:
+                                          CachedNetworkImage(
+                                            imageUrl: "https://image.tmdb.org/t/p/original/"+snapshot.data[index].posterPath,
+                                            progressIndicatorBuilder: (context, url, downloadProgress) =>
+                                                CircularProgressIndicator(value: downloadProgress.progress),
+                                            errorWidget: (context, url, error) => Icon(Icons.error),
+                                          ),
 
-                                            child:ElevatedButton(
-                                                style: ElevatedButton.styleFrom(
-                                                  // dou
-                                                  primary: Colors.white, //background color of button
-                                                  side: BorderSide(width:1, color:Colors.blue), //border width and color
-                                                  elevation: 1, //elevation of button
-                                                  shape: RoundedRectangleBorder( //to set border radius to button
-                                                      borderRadius: BorderRadius.circular(10)
-                                                  ),
-                                                  //content padding inside button
-                                                ),
-                                                onPressed: (){
-                                                  Scaffold.of(context).showSnackBar(new SnackBar(
-                                                    content: new Text("You are currently offline"),
-                                                  ));
-                                                },
-                                                child: Text("Book",style: TextStyle(color: Colors.black),)
-                                            )
+
                                         ),
                                       ),
+                                      Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          AutoSizeText.rich(
+                                            TextSpan(text:snapshot.data[index].originalTitle,),
+                                            style: TextStyle(fontSize: 12,color: Colors.black),
+                                            textAlign :TextAlign.start,
+                                            minFontSize: 1,
+
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+
+
+                                          ),
+                                          AutoSizeText.rich(
+
+                                            TextSpan(text:snapshot.data[index].releaseDate,),
+                                            textAlign :TextAlign.right,
+                                            style: TextStyle(fontSize: 12,color: Colors.black),
+
+                                            minFontSize: 1,
+
+                                          ),
+
+                                          AutoSizeText.rich(
+
+                                            TextSpan(text:snapshot.data[index].adult=="true"?"Adult":"Non adult",),
+                                            textAlign :TextAlign.start,
+                                            style: TextStyle(fontSize: 12,color: Colors.black),
+
+                                            minFontSize: 1,
+
+                                          ),
+
+
+                                        ],
+                                      ),
+                                      Spacer(),
+                                      Row(
+                                        crossAxisAlignment: CrossAxisAlignment.end,
+                                        children: [
+
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: SizedBox(
+
+                                                child:ElevatedButton(
+                                                    style: ElevatedButton.styleFrom(
+                                                      // dou
+                                                      primary: Colors.white, //background color of button
+                                                      side: BorderSide(width:1, color:Colors.blue), //border width and color
+                                                      elevation: 1, //elevation of button
+                                                      shape: RoundedRectangleBorder( //to set border radius to button
+                                                          borderRadius: BorderRadius.circular(10)
+                                                      ),
+                                                      //content padding inside button
+                                                    ),
+                                                    onPressed: (){
+                                                      Scaffold.of(context).showSnackBar(new SnackBar(
+                                                        content: new Text("You are currently offline"),
+                                                      ));
+                                                    },
+                                                    child: Text("Book",style: TextStyle(color: Colors.black),)
+                                                )
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+
                                     ],
                                   ),
 
-                                ],
-                              ),
-
-                            ),
-                            Divider(
-                              color: Colors.grey,
-                              endIndent: 10.0,
-                              indent: 10.0,
-                            )
-                          ],
-                        );
+                                ),
+                                Divider(
+                                  color: Colors.grey,
+                                  endIndent: 10.0,
+                                  indent: 10.0,
+                                )
+                              ],
+                            );
+                          }
 
 
 
 
-                      },
-                    );
+
+
+                    );}
+                  return Center(child: CircularProgressIndicator());
 
                 },
               );
